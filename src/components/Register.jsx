@@ -49,7 +49,7 @@ export default function DataTable() {
             {userArrayReceived && (
               <>
                 <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
-                  User Details
+                  Selected User Details
                 </Typography>
                 <UserInfo userData={selectedUser} />
               </>
