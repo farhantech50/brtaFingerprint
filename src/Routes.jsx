@@ -1,9 +1,9 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
-import LogIn from "./components/LogIn";
-import Register from "./components/Register";
-import Assign from "./components/Assign";
+import Dashboard from "./components/pages/Dashboard";
+import LogIn from "./components/pages/LogIn";
+import Register from "./components/pages/Register";
+import Assign from "./components/pages/Assign";
 import { useAuthContext } from "./contexts/authContext";
 export default function AppRoutes() {
   const { authUser } = useAuthContext();

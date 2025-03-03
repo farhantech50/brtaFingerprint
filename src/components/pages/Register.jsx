@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Grid, Paper, Box, Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles"; // Import useTheme to access the theme
-
-import BranchSelector from "./BranchSelector";
-import UserTable from "./UserTable";
-import UserInfo from "./UserInfo";
+import BranchSelect from "../BranchSelect";
+import BranchSelector from "../BranchSelector";
+import UserTable from "../UserTable";
+import UserInfo from "../UserInfo";
 
 const userArray = [
   { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
@@ -31,7 +31,7 @@ export default function DataTable() {
           <Box
             sx={{ justifyContent: "center", width: "100%", display: "flex" }}
           >
-            <BranchSelector setUserArrayReceived={setUserArrayReceived} />
+            <BranchSelect setUserArrayReceived={setUserArrayReceived} />
           </Box>
           {userArrayReceived && (
             <UserTable
@@ -60,20 +60,22 @@ export default function DataTable() {
 
       {/* Centered Button at Bottom */}
       <Grid item xs={12} display="flex" justifyContent="center" sx={{ mt: 3 }}>
-        <Button
-          variant="contained"
-          sx={{
-            width: "200px",
-            height: "50px",
-            fontSize: "1.1rem",
-            backgroundColor: theme.palette.secondary.main, // Use secondary color for background
-          }}
-          onClick={() => {
-            console.log("clicked");
-          }}
-        >
-          Register User
-        </Button>
+        {userArrayReceived && (
+          <Button
+            variant="contained"
+            sx={{
+              width: "200px",
+              height: "50px",
+              fontSize: "1.1rem",
+              backgroundColor: theme.palette.secondary.main, // Use secondary color for background
+            }}
+            onClick={() => {
+              console.log("clicked");
+            }}
+          >
+            Register User
+          </Button>
+        )}
       </Grid>
     </Grid>
   );

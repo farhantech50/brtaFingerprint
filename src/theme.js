@@ -4,12 +4,12 @@ import { createTheme } from "@mui/material/styles";
 // Create the theme
 const theme = createTheme({
   palette: {
+    mode: "light",
     primary: {
-      main: "#214e96",
+      main: "#116785",
     },
     secondary: {
-      main: "#327bf0",
-      light: "#6ea0f0",
+      main: "#1175a6",
     },
   },
   breakpoints: {

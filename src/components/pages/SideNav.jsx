@@ -13,7 +13,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSidebar } from "../contexts/SidebarContext";
+import { useSidebar } from "../../contexts/SidebarContext";
 import { useMediaQuery, Typography } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";

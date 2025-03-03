@@ -10,9 +10,9 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
-import { useSidebar } from "../contexts/SidebarContext";
-import { useAuthContext } from "../contexts/authContext";
-import useLogout from "../hooks/useLogout";
+import { useSidebar } from "../../contexts/SidebarContext";
+import { useAuthContext } from "../../contexts/authContext";
+import useLogout from "../../hooks/useLogout";
 
 const AppBar = styled(
   MuiAppBar,
