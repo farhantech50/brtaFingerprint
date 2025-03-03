@@ -14,10 +14,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSidebar } from "../../contexts/SidebarContext";
-import { useMediaQuery, Typography } from "@mui/material";
+import { useMediaQuery, Typography, Avatar } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
+import { useAuthContext } from "../../contexts/authContext";
 
 const drawerWidth = 240;
 
@@ -28,23 +29,67 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
 }));
-
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+  width: 60,
+  height: 60,
+  marginLeft: "auto",
+  marginRight: "auto",
+  display: "block",
+}));
 export default function SideNav() {
+  const { authUser, isSuperAdmin, isCircleAdmin, isOperator } =
+    useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
   const { open, toggleSidebar } = useSidebar(); // Get open state and function to toggle
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Detect small screens
 
-  const menuItems = [
-    { text: "Dashboard", icon: <HomeIcon />, path: "/" },
-    {
-      text: "Register User",
-      icon: <PermContactCalendarIcon />,
-      path: "/register",
-    },
-    { text: "Assign Role", icon: <DashboardCustomizeIcon />, path: "/assign" },
-  ];
+  console.log(isSuperAdmin, isCircleAdmin, isOperator);
+
+  let menuItems = [];
+  // Check the user's role and set menu items accordingly
+  if (authUser && authUser.role) {
+    switch (authUser.role) {
+      case "super-admin":
+        menuItems = [
+          { text: "Dashboard", icon: <HomeIcon />, path: "/" },
+          {
+            text: "Register User",
+            icon: <PermContactCalendarIcon />,
+            path: "/register",
+          },
+          {
+            text: "Assign IP",
+            icon: <DashboardCustomizeIcon />,
+            path: "/assign",
+          },
+        ];
+        break;
+
+      case "circle-admin":
+        menuItems = [
+          { text: "Dashboard", icon: <HomeIcon />, path: "/" },
+          {
+            text: "Register User",
+            icon: <PermContactCalendarIcon />,
+            path: "/register",
+          },
+        ];
+        break;
+
+      case "operator":
+        menuItems = [{ text: "Dashboard", icon: <HomeIcon />, path: "/" }];
+        break;
+
+      default:
+        menuItems = []; // If no valid role is found
+        break;
+    }
+  }
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -70,6 +115,23 @@ export default function SideNav() {
             )}
           </IconButton>
         </DrawerHeader>
+        <Box
+          sx={{
+            display: !open ? "none" : "block", // Hide on mobile
+          }}
+        >
+          <StyledAvatar alt="BRTA Logo" src="/logo.png" />
+          {authUser && ( // Check if authUser exists
+            <Typography
+              variant="h5"
+              align="center"
+              marginBottom={theme.spacing(2)}
+            >
+              {authUser.name} {/* Display name only if authUser is available */}
+            </Typography>
+          )}
+        </Box>
+
         <Divider />
         <List>
           {menuItems.map((item) => {

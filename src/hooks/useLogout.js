@@ -8,11 +8,9 @@ const useLogout = () => {
     try {
       //   // Send a logout request to the backend
       //   const res = await axios.post(`http://localhost:3000/api/auth/logout`, {});
-
+      setAuthUser(null);
       localStorage.removeItem("user-details");
       localStorage.removeItem("access-token");
-
-      setAuthUser(null);
     } catch (error) {
       console.error("Error logging out:", error);
     }

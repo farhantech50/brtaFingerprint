@@ -47,8 +47,8 @@ const theme = createTheme({
     },
     h5: {
       fontFamily: ["Rubik", "sans-serif"].join(","),
-      fontSize: 16,
-      fontWeight: 200, // Font weight for h5
+      fontSize: 18,
+      fontWeight: 400, // Font weight for h5
     },
     h6: {
       fontFamily: ["Rubik", "sans-serif"].join(","),

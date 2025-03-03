@@ -2,7 +2,6 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useTheme } from "@mui/material/styles";
-import { green } from "@mui/material/colors";
 
 const names = [
   "Dhaka-Metro-1",
@@ -47,7 +46,17 @@ export default function SearchableSelect({ setUserArrayReceived }) {
       options={names}
       value={selectedName} // Single value, not an array
       onChange={handleDropDownChange}
-      renderInput={(params) => <TextField {...params} label="Select Branch" />}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label="Select Branch"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 3,
+            },
+          }}
+        />
+      )}
       sx={{ width: 300, m: 1 }}
     />
   );

@@ -12,8 +12,8 @@ export default function AppRoutes() {
     <Routes>
       <Route
         path="/"
-        element={<Dashboard />}
-        // element={authUser ? <Dashboard /> : <Navigate to="/login" />}
+        // element={<Dashboard />}
+        element={authUser ? <Dashboard /> : <Navigate to="/login" />}
       />
       <Route
         path="/login"
@@ -21,13 +21,13 @@ export default function AppRoutes() {
       />
       <Route
         path="/register"
-        element={<Register />}
-        // element={authUser ? <Register /> : <LogIn />}
+        // element={<Register />}
+        element={authUser ? <Register /> : <LogIn />}
       />
       <Route
         path="/assign"
-        element={<Assign />}
-        // element={authUser ? <Assign /> : <LogIn />}
+        // element={<Assign />}
+        element={authUser ? <Assign /> : <LogIn />}
       />
     </Routes>
   );

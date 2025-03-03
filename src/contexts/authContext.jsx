@@ -11,41 +11,16 @@ export const AuthContextProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(
     JSON.parse(localStorage.getItem("user-details"))
   );
-
   const [token, setToken] = useState(localStorage.getItem("access-token"));
-
-  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
-  const [isCircleAdmin, setIsCircleAdmin] = useState(false);
-  const [isUser, setIsUser] = useState(false);
-
-  useEffect(() => {
-    if (!token) return;
-
-    const extractedData = extractDataFromToken(token) || {};
-    const userId = extractedData.userId || null;
-    const userRole = extractedData.userRole || null;
-
-    switch (userRole) {
-      case "super-admin":
-        setIsSuperAdmin(true);
-        break;
-      case "circle-admin":
-        setIsCircleAdmin(true);
-        break;
-      case "user":
-        setIsUser(true);
-        break;
-    }
-  }, [token]);
+  const extractedData = extractDataFromToken(token) || {};
+  const userId = extractedData.userId || null;
+  const userRole = extractedData.userRole || null;
 
   return (
     <AuthContext.Provider
       value={{
         authUser,
         setAuthUser,
-        isSuperAdmin,
-        isCircleAdmin,
-        isUser,
       }}
     >
       {children}
