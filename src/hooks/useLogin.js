@@ -1,19 +1,18 @@
 import { useAuthContext } from "../contexts/authContext";
 import useApi from "./useApi";
-import dummyLogin from "../utils/dummyLogin";
+//import dummyLogin from "../utils/dummyLogin";
 
 const useLogin = () => {
   const api = useApi();
   const { setAuthUser } = useAuthContext();
   const login = async (userName, password) => {
     try {
-      // const res = await api.post(`/auth/login`, {
-      //   userName,
-      //   password,
-      // });
-      // const data = res.data.data;
-      const data = dummyLogin(userName);
-      console.log(data);
+      const res = await api.post(`/auth/login`, {
+        userName,
+        password,
+      });
+      const data = res.data.data;
+      //const data = dummyLogin(userName);
       if (data.error) {
         throw new Error(data.error);
       }

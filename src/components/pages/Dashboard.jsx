@@ -3,20 +3,24 @@ import Box from "@mui/material/Box";
 import { useAuthContext } from "../../contexts/authContext";
 
 export default function Dashboard() {
-  const { authUser } = useAuthContext(); // Assuming authUser contains the user data
-  const [userData, setUserData] = useState({});
+  const { isSuperAdmin, isCircleAdmin, isOperator } = useAuthContext();
+  const [userRole, setUserRole] = useState("No Role");
 
   useEffect(() => {
-    if (authUser) {
-      setUserData({
-        role: authUser.role || "No Role", // Setting the role of the user
-      });
+    if (isSuperAdmin) {
+      setUserRole("Super Admin");
+    } else if (isCircleAdmin) {
+      setUserRole("Circle Admin");
+    } else if (isOperator) {
+      setUserRole("Operator");
+    } else {
+      setUserRole("No Role");
     }
-  }, [authUser]);
+  }, [isSuperAdmin, isCircleAdmin, isOperator]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <div>Role: {userData.role}</div> {/* Displaying the role */}
+      <div>Role: {userRole}</div> {/* Displaying the role */}
     </Box>
   );
 }

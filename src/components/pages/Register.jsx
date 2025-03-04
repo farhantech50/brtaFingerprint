@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Grid, Paper, Box, Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles"; // Import useTheme to access the theme
 import BranchSelect from "../BranchSelect";
-import BranchSelector from "../BranchSelector";
 import UserTable from "../UserTable";
 import UserInfo from "../UserInfo";
 
@@ -19,10 +18,9 @@ const userArray = [
 ];
 
 export default function DataTable() {
+  const [selectedBranchDetails, setSelectedBranchDetails] = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
-  const [userArrayReceived, setUserArrayReceived] = useState(false);
   const theme = useTheme(); // Use the theme hook to access the theme
-
   return (
     <Grid container spacing={2} justifyContent="center">
       {/* Left Card */}
@@ -31,9 +29,9 @@ export default function DataTable() {
           <Box
             sx={{ justifyContent: "center", width: "100%", display: "flex" }}
           >
-            <BranchSelect setUserArrayReceived={setUserArrayReceived} />
+            <BranchSelect setSelectedBranchDetails={setSelectedBranchDetails} />
           </Box>
-          {userArrayReceived && (
+          {selectedBranchDetails && (
             <UserTable
               userArray={userArray}
               setSelectedUser={setSelectedUser}
@@ -46,7 +44,7 @@ export default function DataTable() {
       <Grid item xs={12} md={6}>
         <Paper sx={{ p: 2, boxShadow: 3, borderRadius: 2, height: "100%" }}>
           <Box>
-            {userArrayReceived && (
+            {selectedBranchDetails && (
               <>
                 <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
                   Selected User Details
@@ -60,7 +58,7 @@ export default function DataTable() {
 
       {/* Centered Button at Bottom */}
       <Grid item xs={12} display="flex" justifyContent="center" sx={{ mt: 3 }}>
-        {userArrayReceived && (
+        {selectedBranchDetails && (
           <Button
             variant="contained"
             sx={{

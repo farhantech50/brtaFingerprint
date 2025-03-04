@@ -47,47 +47,32 @@ export default function SideNav() {
   const { open, toggleSidebar } = useSidebar(); // Get open state and function to toggle
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Detect small screens
 
-  console.log(isSuperAdmin, isCircleAdmin, isOperator);
-
   let menuItems = [];
-  // Check the user's role and set menu items accordingly
-  if (authUser && authUser.role) {
-    switch (authUser.role) {
-      case "super-admin":
-        menuItems = [
-          { text: "Dashboard", icon: <HomeIcon />, path: "/" },
-          {
-            text: "Register User",
-            icon: <PermContactCalendarIcon />,
-            path: "/register",
-          },
-          {
-            text: "Assign IP",
-            icon: <DashboardCustomizeIcon />,
-            path: "/assign",
-          },
-        ];
-        break;
-
-      case "circle-admin":
-        menuItems = [
-          { text: "Dashboard", icon: <HomeIcon />, path: "/" },
-          {
-            text: "Register User",
-            icon: <PermContactCalendarIcon />,
-            path: "/register",
-          },
-        ];
-        break;
-
-      case "operator":
-        menuItems = [{ text: "Dashboard", icon: <HomeIcon />, path: "/" }];
-        break;
-
-      default:
-        menuItems = []; // If no valid role is found
-        break;
-    }
+  if (isSuperAdmin) {
+    menuItems = [
+      { text: "Dashboard", icon: <HomeIcon />, path: "/" },
+      {
+        text: "Register User",
+        icon: <PermContactCalendarIcon />,
+        path: "/register",
+      },
+      {
+        text: "Assign IP",
+        icon: <DashboardCustomizeIcon />,
+        path: "/assign",
+      },
+    ];
+  } else if (isCircleAdmin) {
+    menuItems = [
+      { text: "Dashboard", icon: <HomeIcon />, path: "/" },
+      {
+        text: "Register User",
+        icon: <PermContactCalendarIcon />,
+        path: "/register",
+      },
+    ];
+  } else if (isOperator) {
+    menuItems = [{ text: "Dashboard", icon: <HomeIcon />, path: "/" }];
   }
 
   return (
@@ -127,7 +112,8 @@ export default function SideNav() {
               align="center"
               marginBottom={theme.spacing(2)}
             >
-              {authUser.name} {/* Display name only if authUser is available */}
+              {authUser.profileName}
+              {/* Display name only if authUser is available */}
             </Typography>
           )}
         </Box>

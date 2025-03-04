@@ -10,6 +10,7 @@ const theme = createTheme({
     },
     secondary: {
       main: "#1175a6",
+      light: "#63b1c9",
     },
   },
   breakpoints: {

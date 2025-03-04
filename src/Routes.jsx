@@ -22,12 +22,12 @@ export default function AppRoutes() {
       <Route
         path="/register"
         // element={<Register />}
-        element={authUser ? <Register /> : <LogIn />}
+        element={authUser ? <Register /> : <Navigate to="/login" />}
       />
       <Route
         path="/assign"
         // element={<Assign />}
-        element={authUser ? <Assign /> : <LogIn />}
+        element={authUser ? <Assign /> : <Navigate to="/login" />}
       />
     </Routes>
   );
