@@ -1,4 +1,5 @@
 import { jwtDecode } from "jwt-decode";
+
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
@@ -11,15 +12,15 @@ export const AuthContextProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(
     JSON.parse(localStorage.getItem("user-details"))
   );
+  const [token, setToken] = useState(
+    JSON.parse(localStorage.getItem("access-token") || null)
+  );
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const [isCircleAdmin, setIsCircleAdmin] = useState(false);
   const [isOperator, setIsOperator] = useState(false);
 
-  const token = localStorage.getItem("access-token");
-
   useEffect(() => {
     if (!token) return;
-
     const extractedData = extractDataFromToken(token);
     if (extractedData && extractedData.userRole) {
       const userRole = extractedData.userRole;
@@ -37,6 +38,7 @@ export const AuthContextProvider = ({ children }) => {
         isSuperAdmin,
         isCircleAdmin,
         isOperator,
+        setToken,
       }}
     >
       {children}

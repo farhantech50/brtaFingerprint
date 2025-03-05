@@ -5,25 +5,21 @@ import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "firstName", headerName: "First name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
+  { field: "firstName", headerName: "Name", width: 500 },
+  { field: "designationName", headerName: "Designation", width: 250 },
 ];
 
 export default function UserTable({ userArray, setSelectedUser }) {
   const [selectionModel, setSelectionModel] = useState([]); // Initialize as empty array
   const [searchText, setSearchText] = useState("");
   const [filteredRows, setFilteredRows] = useState(userArray);
+
   useEffect(() => {
     setFilteredRows(
       userArray.filter(
         (row) =>
-          row.id.toString().includes(searchText) || // Search by ID
-          row.firstName?.toLowerCase().includes(searchText.toLowerCase()) ||
-          row.lastName?.toLowerCase().includes(searchText.toLowerCase()) ||
-          `${row.firstName} ${row.lastName}`
-            .toLowerCase()
-            .includes(searchText.toLowerCase())
+          row.firstName.toLowerCase().includes(searchText) || // Search by ID
+          row.designationName?.toLowerCase().includes(searchText.toLowerCase()) // Search by Name
       )
     );
   }, [searchText]);

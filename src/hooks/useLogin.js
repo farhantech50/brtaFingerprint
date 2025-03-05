@@ -4,7 +4,7 @@ import useApi from "./useApi";
 
 const useLogin = () => {
   const api = useApi();
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser, setToken } = useAuthContext();
   const login = async (userName, password) => {
     try {
       const res = await api.post(`/auth/login`, {
@@ -20,6 +20,7 @@ const useLogin = () => {
       localStorage.setItem("user-details", JSON.stringify(data));
       localStorage.setItem("access-token", JSON.stringify(data.accessToken));
       setAuthUser(data);
+      setToken(JSON.parse(localStorage.getItem("access-token")));
       return {
         success: true,
         message: data,

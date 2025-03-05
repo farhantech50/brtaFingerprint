@@ -56,6 +56,11 @@ const theme = createTheme({
       fontSize: 14,
       fontWeight: 500, // Font weight for h6
     },
+    h7: {
+      fontFamily: ["Rubik", "sans-serif"].join(","),
+      fontSize: 15,
+      fontWeight: 400, // Font weight for h6
+    },
   },
   spacing: 8, // Default spacing (padding/margin)
 });

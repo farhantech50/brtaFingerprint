@@ -1,26 +1,47 @@
-import { useState } from "react";
-import { Grid, Paper, Box, Typography, Button } from "@mui/material";
+import { useState, useEffect, useRef } from "react";
+import { Grid, Paper, Box, Typography, Button, TextField } from "@mui/material";
 import { useTheme } from "@mui/material/styles"; // Import useTheme to access the theme
 import BranchSelect from "../BranchSelect";
 import UserTable from "../UserTable";
 import UserInfo from "../UserInfo";
-
-const userArray = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: "Stark", age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
+import { useAuthContext } from "../../contexts/authContext";
+import useGetEmployeeList from "../../hooks/useGetEmployeeList";
 
 export default function DataTable() {
+  const { fetchEmployeeList } = useGetEmployeeList();
+  const [employeeList, setEmployeeList] = useState([]);
+  const { isSuperAdmin, isCircleAdmin } = useAuthContext();
   const [selectedBranchDetails, setSelectedBranchDetails] = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
   const theme = useTheme(); // Use the theme hook to access the theme
+  const [gotList, setGotList] = useState(false);
+
+  useEffect(() => {
+    if (isCircleAdmin) {
+      setSelectedBranchDetails({ value: 2, text: "Dhaka-Metro-1" });
+    }
+  }, [isCircleAdmin]);
+
+  useEffect(() => {
+    const getList = async () => {
+      if (!selectedBranchDetails) return;
+      try {
+        const res = await fetchEmployeeList(selectedBranchDetails.value);
+        const updatedList = res.data.map((row) => ({
+          ...row,
+          id: row.employeeId, // Assign employeeId as id
+        }));
+        setSelectedUser(null);
+        setEmployeeList(updatedList);
+        setGotList(true);
+      } catch (error) {
+        setSelectedUser(null);
+        console.error("Error fetching employee list:", error);
+      }
+    };
+
+    getList();
+  }, [selectedBranchDetails, setSelectedBranchDetails]);
   return (
     <Grid container spacing={2} justifyContent="center">
       {/* Left Card */}
@@ -29,11 +50,33 @@ export default function DataTable() {
           <Box
             sx={{ justifyContent: "center", width: "100%", display: "flex" }}
           >
-            <BranchSelect setSelectedBranchDetails={setSelectedBranchDetails} />
+            {isSuperAdmin ? (
+              <BranchSelect
+                setSelectedBranchDetails={setSelectedBranchDetails}
+                setGotList={setGotList}
+              />
+            ) : isCircleAdmin ? (
+              <TextField
+                value={selectedBranchDetails?.text}
+                aria-readonly
+                variant="outlined"
+                fullWidth
+                sx={{
+                  maxWidth: 300,
+                  m: 2,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                  },
+                }}
+                InputProps={{
+                  inputProps: { style: { textAlign: "center" } }, // Center text inside input
+                }}
+              />
+            ) : null}
           </Box>
-          {selectedBranchDetails && (
+          {selectedBranchDetails && gotList && (
             <UserTable
-              userArray={userArray}
+              userArray={employeeList}
               setSelectedUser={setSelectedUser}
             />
           )}
@@ -49,31 +92,14 @@ export default function DataTable() {
                 <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
                   Selected User Details
                 </Typography>
-                <UserInfo userData={selectedUser} />
+                <UserInfo
+                  userData={selectedUser}
+                  selectedBranchDetails={selectedBranchDetails}
+                />
               </>
             )}
           </Box>
         </Paper>
-      </Grid>
-
-      {/* Centered Button at Bottom */}
-      <Grid item xs={12} display="flex" justifyContent="center" sx={{ mt: 3 }}>
-        {selectedBranchDetails && (
-          <Button
-            variant="contained"
-            sx={{
-              width: "200px",
-              height: "50px",
-              fontSize: "1.1rem",
-              backgroundColor: theme.palette.secondary.main, // Use secondary color for background
-            }}
-            onClick={() => {
-              console.log("clicked");
-            }}
-          >
-            Register User
-          </Button>
-        )}
       </Grid>
     </Grid>
   );
