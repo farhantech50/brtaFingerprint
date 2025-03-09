@@ -11,7 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useSidebar } from "../../contexts/SidebarContext";
-import { useAuthContext } from "../../contexts/authContext";
+
 import useLogout from "../../hooks/useLogout";
 
 const AppBar = styled(
@@ -24,7 +24,7 @@ const AppBar = styled(
 export default function NavBar() {
   const { logout } = useLogout();
   const navigate = useNavigate();
-  const { setAuthUser, setToken } = useAuthContext();
+
   const { open, setOpen } = useSidebar();
   const [anchorEl, setAnchorEl] = React.useState(null);
 

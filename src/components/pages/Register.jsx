@@ -10,7 +10,7 @@ import useGetEmployeeList from "../../hooks/useGetEmployeeList";
 export default function DataTable() {
   const { fetchEmployeeList } = useGetEmployeeList();
   const [employeeList, setEmployeeList] = useState([]);
-  const { isSuperAdmin, isCircleAdmin } = useAuthContext();
+  const { isSuperAdmin, isCircleAdmin, authUser } = useAuthContext();
   const [selectedBranchDetails, setSelectedBranchDetails] = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
   const theme = useTheme(); // Use the theme hook to access the theme
@@ -18,7 +18,11 @@ export default function DataTable() {
 
   useEffect(() => {
     if (isCircleAdmin) {
-      setSelectedBranchDetails({ value: 2, text: "Dhaka-Metro-1" });
+      console.log(authUser);
+      setSelectedBranchDetails({
+        value: authUser.branchId,
+        text: authUser.branchName,
+      });
     }
   }, [isCircleAdmin]);
 
@@ -85,8 +89,15 @@ export default function DataTable() {
 
       {/* Right Card */}
       <Grid item xs={12} md={6}>
-        <Paper sx={{ p: 2, boxShadow: 3, borderRadius: 2, height: "100%" }}>
-          <Box>
+        <Paper
+          sx={{
+            p: 2,
+            boxShadow: 3,
+            borderRadius: 2,
+            height: "100%",
+          }}
+        >
+          <Box sx={{ marginTop: 10 }}>
             {selectedBranchDetails && (
               <>
                 <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>

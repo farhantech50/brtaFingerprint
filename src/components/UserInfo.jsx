@@ -1,6 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { useAuthContext } from "../contexts/authContext";
 import { useTheme, styled } from "@mui/material/styles"; // Import useTheme to access the theme
 import {
   Grid,
@@ -13,11 +14,13 @@ import {
   MenuItem,
   Button,
 } from "@mui/material";
+import showToast from "../utils/toast";
 
 export default function UserInfo({ userData, selectedBranchDetails }) {
   if (!userData) {
     return null; // If no user data is provided, render nothing
   }
+  const { isSuperAdmin, isCircleAdmin } = useAuthContext();
   const [isActive, setIsActive] = React.useState(false); // State to manage switch status
   const [role, setRole] = React.useState("");
   const theme = useTheme(); // Use the theme hook to access the theme
@@ -27,10 +30,24 @@ export default function UserInfo({ userData, selectedBranchDetails }) {
     setRole("");
   }, [userData]);
 
-  React.useEffect(() => {
-    console.log(isActive);
-  }, [isActive]);
-
+  const handleRegisterChange = (event) => {
+    if (!role) {
+      showToast("Please select role for the user", "warn");
+      return;
+    }
+    console.log("UserID: " + userData.id);
+    console.log("Active: " + isActive);
+    console.log("Role: " + role);
+  };
+  // Function that returns JSX (dynamically generates MenuItem components)
+  const renderMenuItems = () => {
+    if (isSuperAdmin) {
+      return <MenuItem value="CIRCLE_ADMIN">Circle Admin</MenuItem>;
+    }
+    if (isCircleAdmin) {
+      return <MenuItem value="OPERATOR">Operator</MenuItem>;
+    }
+  };
   return (
     <Box
       component="form"
@@ -162,8 +179,7 @@ export default function UserInfo({ userData, selectedBranchDetails }) {
                 backgroundColor: theme.palette.secondary.light,
               }}
             >
-              <MenuItem value="CIRCLE_ADMIN">Circle Admin</MenuItem>
-              <MenuItem value="OPERATOR">Operator</MenuItem>
+              {renderMenuItems()}
             </Select>
           </FormControl>
         </Grid>
@@ -180,6 +196,7 @@ export default function UserInfo({ userData, selectedBranchDetails }) {
               backgroundColor: theme.palette.secondary.light,
               marginLeft: 1,
               height: 54,
+              width: "100%",
               cursor: "pointer",
             }}
           >
@@ -206,9 +223,7 @@ export default function UserInfo({ userData, selectedBranchDetails }) {
               backgroundColor: theme.palette.secondary.main,
               marginLeft: 1,
             }}
-            onClick={() => {
-              console.log("clicked");
-            }}
+            onClick={handleRegisterChange}
           >
             Register User
           </Button>

@@ -4,7 +4,6 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import useLogin from "../../hooks/useLogin";
 import showToast from "../../utils/toast";
 
@@ -19,16 +18,16 @@ export default function LogIn() {
 
     // Validation check for empty fields
     if (!userName || !password) {
-      showToast("Please fill in all required fields.", false);
+      showToast("Please fill in all required fields.", "error");
       return; // Don't proceed if fields are empty
     }
 
     try {
       const response = await login(userName, password);
       if (response.success === false) {
-        showToast(response.message, false);
+        showToast(response.message, "error");
       } else {
-        showToast("Login Successful", true);
+        showToast("Login Successful", "success");
       }
     } catch (e) {
       showToast("An error occurred during login", "error");
@@ -36,7 +35,7 @@ export default function LogIn() {
   };
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ height: "100vh" }}>
+    <>
       <Box
         sx={{
           width: "100%",
@@ -99,21 +98,16 @@ export default function LogIn() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+            <Grid container sx={{ display: "flex", justifyContent: "center" }}>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/" variant="body2">
+                  Forgot password?
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
       </Box>
-    </Container>
+    </>
   );
 }

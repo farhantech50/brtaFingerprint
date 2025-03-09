@@ -17,7 +17,6 @@ const useLogin = () => {
         throw new Error(data.error);
       }
       // localStorage
-      localStorage.setItem("user-details", JSON.stringify(data));
       localStorage.setItem("access-token", JSON.stringify(data.accessToken));
       setAuthUser(data);
       setToken(JSON.parse(localStorage.getItem("access-token")));

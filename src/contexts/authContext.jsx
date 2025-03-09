@@ -9,9 +9,7 @@ export const useAuthContext = () => {
 };
 
 export const AuthContextProvider = ({ children }) => {
-  const [authUser, setAuthUser] = useState(
-    JSON.parse(localStorage.getItem("user-details"))
-  );
+  const [authUser, setAuthUser] = useState({});
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem("access-token") || null)
   );
@@ -23,6 +21,13 @@ export const AuthContextProvider = ({ children }) => {
     if (!token) return;
     const extractedData = extractDataFromToken(token);
     if (extractedData && extractedData.userRole) {
+      setAuthUser({
+        ...authUser,
+        profileName: extractedData.profileName,
+        userName: extractedData.userName,
+        branchId: extractedData.branchId,
+        branchName: extractedData.branchName,
+      });
       const userRole = extractedData.userRole;
       setIsSuperAdmin(userRole === "SUPER_ADMIN");
       setIsCircleAdmin(userRole === "CIRCLE_ADMIN");
@@ -55,7 +60,13 @@ const extractDataFromToken = (token) => {
     // Decode the token using jwt-decode
     const decodedToken = jwtDecode(token);
 
-    return { userRole: decodedToken.sub }; // Ensure the correct field is used
+    return {
+      userRole: decodedToken.sub,
+      profileName: decodedToken.profileName,
+      userName: decodedToken.userName,
+      branchId: decodedToken.branchId,
+      branchName: decodedToken.branchName,
+    }; // Ensure the correct field is used
   } catch (error) {
     console.error("Invalid JWT Token:", error);
     return null;
