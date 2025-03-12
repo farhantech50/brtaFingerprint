@@ -1,6 +1,5 @@
 import { useAuthContext } from "../contexts/authContext";
 import useApi from "./useApi";
-//import dummyLogin from "../utils/dummyLogin";
 
 const useLogin = () => {
   const api = useApi();

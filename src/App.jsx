@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import NavBar from "./components/pages/NavBar"; // Import your NavBar
-import SideNav from "./components/pages/SideNav"; // Import your Sidebar
+import NavBar from "./components/others/NavBar"; // Import your NavBar
+import SideNav from "./components/others/SideNav"; // Import your Sidebar
 import Box from "@mui/material/Box"; // Import Box for layout
 import AppRoutes from "./Routes";
 import { ToastContainer } from "react-toastify";

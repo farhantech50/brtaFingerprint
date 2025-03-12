@@ -2,13 +2,14 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useTheme } from "@mui/material/styles";
-import { useAuthContext } from "../contexts/authContext";
+import { useAuthContext } from "../../contexts/authContext";
 import { useEffect } from "react";
-import useApi from "../hooks/useApi";
+import useApi from "../../hooks/useApi";
 
 export default function SearchableSelect({
   setSelectedBranchDetails,
   setGotList,
+  setEmployeeDetails,
 }) {
   const [branchNames, setBranchNames] = React.useState([]);
   const { isSuperAdmin, isCircleAdmin } = useAuthContext();
@@ -50,6 +51,7 @@ export default function SearchableSelect({
       setSelectedName(newValue);
       setSelectedBranchDetails(newValue);
     } else {
+      setEmployeeDetails(null);
       setGotList(false);
       setSelectedName(null);
       setSelectedBranchDetails(null);
@@ -74,7 +76,7 @@ export default function SearchableSelect({
           }}
         />
       )}
-      sx={{ width: 300, m: 1 }}
+      fullWidth
     />
   );
 }

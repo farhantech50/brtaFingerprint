@@ -18,7 +18,7 @@ export default function LogIn() {
 
     // Validation check for empty fields
     if (!userName || !password) {
-      showToast("Please fill in all required fields.", "error");
+      showToast("Please fill in all required fields.", "warn");
       return; // Don't proceed if fields are empty
     }
 

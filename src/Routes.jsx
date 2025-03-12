@@ -1,34 +1,34 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Dashboard from "./components/pages/Dashboard";
-import LogIn from "./components/pages/LogIn";
-import Register from "./components/pages/Register";
-import Assign from "./components/pages/Assign";
+import Dashboard from "./components/dashboard/Dashboard";
+import LogIn from "./components/login/LogIn";
+import Register from "./components/register/Register";
+import Assign from "./components/assign/Assign";
 import { useAuthContext } from "./contexts/authContext";
+
 export default function AppRoutes() {
-  const { authUser } = useAuthContext();
+  const { isLoggedIn } = useAuthContext(); // Access isLoggedIn from context
 
   return (
     <Routes>
       <Route
         path="/"
-        // element={<Dashboard />}
-        element={authUser ? <Dashboard /> : <Navigate to="/login" />}
+        element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
       />
       <Route
         path="/login"
-        element={authUser ? <Navigate to="/" /> : <LogIn />}
+        element={isLoggedIn ? <Navigate to="/" /> : <LogIn />}
       />
       <Route
         path="/register"
-        // element={<Register />}
-        element={authUser ? <Register /> : <Navigate to="/login" />}
+        element={isLoggedIn ? <Register /> : <Navigate to="/login" />}
       />
       <Route
         path="/assign"
-        // element={<Assign />}
-        element={authUser ? <Assign /> : <Navigate to="/login" />}
+        element={isLoggedIn ? <Assign /> : <Navigate to="/login" />}
       />
+      {/* Handle unknown routes */}
+      <Route path="*" element={<Navigate to={isLoggedIn ? "/" : "/login"} />} />
     </Routes>
   );
 }

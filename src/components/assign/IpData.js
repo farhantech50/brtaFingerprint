@@ -1,0 +1,123 @@
+const ipData = [
+  {
+    id: 1,
+    branchName: "Dhaka",
+    terminalIp: "192.168.0.1",
+    enabled: true,
+  },
+  {
+    id: 2,
+    branchName: "Chittagong",
+    terminalIp: "192.168.0.2",
+    enabled: false,
+  },
+  {
+    id: 3,
+    branchName: "Rajshahi",
+    terminalIp: "192.168.0.3",
+    enabled: true,
+  },
+  {
+    id: 4,
+    branchName: "Khulna",
+    terminalIp: "192.168.0.4",
+    enabled: false,
+  },
+  {
+    id: 5,
+    branchName: "Sylhet",
+    terminalIp: "192.168.0.5",
+    enabled: true,
+  },
+  {
+    id: 6,
+    branchName: "Barisal",
+    terminalIp: "192.168.0.6",
+    enabled: false,
+  },
+  {
+    id: 7,
+    branchName: "Rangpur",
+    terminalIp: "192.168.0.7",
+    enabled: true,
+  },
+  {
+    id: 8,
+    branchName: "Mymensingh",
+    terminalIp: "192.168.0.8",
+    enabled: false,
+  },
+  {
+    id: 9,
+    branchName: "Comilla",
+    terminalIp: "192.168.0.9",
+    enabled: true,
+  },
+  {
+    id: 10,
+    branchName: "Narayanganj",
+    terminalIp: "192.168.0.10",
+    enabled: true,
+  },
+  {
+    id: 11,
+    branchName: "Noakhali",
+    terminalIp: "192.168.0.11",
+    enabled: false,
+  },
+  {
+    id: 12,
+    branchName: "Tangail",
+    terminalIp: "192.168.0.12",
+    enabled: true,
+  },
+  {
+    id: 13,
+    branchName: "Bogra",
+    terminalIp: "192.168.0.13",
+    enabled: true,
+  },
+  {
+    id: 14,
+    branchName: "Pabna",
+    terminalIp: "192.168.0.14",
+    enabled: false,
+  },
+  {
+    id: 15,
+    branchName: "Narsingdi",
+    terminalIp: "192.168.0.15",
+    enabled: true,
+  },
+  {
+    id: 16,
+    branchName: "Jessore",
+    terminalIp: "192.168.0.16",
+    enabled: false,
+  },
+  {
+    id: 17,
+    branchName: "Satkhira",
+    terminalIp: "192.168.0.17",
+    enabled: true,
+  },
+  {
+    id: 18,
+    branchName: "Feni",
+    terminalIp: "192.168.0.18",
+    enabled: false,
+  },
+  {
+    id: 19,
+    branchName: "Moulvibazar",
+    terminalIp: "192.168.0.19",
+    enabled: true,
+  },
+  {
+    id: 20,
+    branchName: "Kurigram",
+    terminalIp: "192.168.0.20",
+    enabled: false,
+  },
+];
+export default ipData;
