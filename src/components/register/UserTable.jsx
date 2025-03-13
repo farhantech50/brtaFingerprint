@@ -79,7 +79,7 @@ export default function UserTable({
         );
         const users = response.data.data.map((user) => ({
           ...user,
-          id: user.userName,
+          id: user.userId,
         }));
 
         setUserArray(users);
@@ -107,15 +107,38 @@ export default function UserTable({
     setIsModalOpen(true);
   };
 
-  // Switch change handler for individual rows
-  const handleSwitchChange = (row, event) => {
-    const updatedRows = filteredRows.map((user) => {
-      if (user.id === row.id) {
-        return { ...user, enabled: event.target.checked ? 1 : 0 };
-      }
-      return user;
-    });
-    setFilteredRows(updatedRows);
+  const handleSwitchChange = async (row, event) => {
+    const activeStatus = event.target.checked;
+
+    const updatedRows = await Promise.all(
+      filteredRows.map(async (user) => {
+        if (user.id === row.id) {
+          try {
+            const response = await api.post(
+              `http://192.168.78.70:5001/brtafp/user-admin/user-active-inactive`,
+              {
+                userId: user.id,
+                activeStatus: Number(activeStatus),
+              }
+            );
+            console.log(response);
+            if (response.data.success) {
+              return { ...user, enabled: activeStatus ? 1 : 0 };
+            }
+          } catch (err) {
+            console.error("Error changing status:", err);
+          }
+
+          return user;
+        }
+        return user;
+      })
+    );
+
+    // 🚀 Ensure all rows have an ID before updating state
+    setFilteredRows(
+      updatedRows.filter((user) => user !== undefined && user.id !== undefined)
+    );
   };
 
   return (

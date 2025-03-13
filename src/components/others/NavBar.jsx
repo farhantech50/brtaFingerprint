@@ -102,7 +102,7 @@ export default function NavBar() {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            BRTA Fingerprint Application
+            BRTA Driving Licence Biometrics
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />
