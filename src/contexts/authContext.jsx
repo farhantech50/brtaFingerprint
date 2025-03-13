@@ -9,6 +9,7 @@ export const useAuthContext = () => {
 
 export const AuthContextProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState({});
+  const [loginLandData, setLoginLandData] = useState({});
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem("access-token") || null)
   );
@@ -23,7 +24,7 @@ export const AuthContextProvider = ({ children }) => {
       const extractedData = extractDataFromToken(token);
       if (extractedData && extractedData.userRole) {
         setAuthUser({
-          profileName: extractedData.profileName,
+          firstName: extractedData.firstName,
           userName: extractedData.userName,
           branchId: extractedData.branchId,
           branchName: extractedData.branchName,
@@ -51,7 +52,9 @@ export const AuthContextProvider = ({ children }) => {
         isOperator,
         setToken,
         setIsLoggedIn,
-        isLoggedIn, // Use the state here instead of ref
+        isLoggedIn,
+        loginLandData,
+        setLoginLandData,
       }}
     >
       {children}
@@ -70,7 +73,7 @@ const extractDataFromToken = (token) => {
 
     return {
       userRole: decodedToken.sub,
-      profileName: decodedToken.profileName,
+      firstName: decodedToken.firstName,
       userName: decodedToken.userName,
       branchId: decodedToken.branchId,
       branchName: decodedToken.branchName,

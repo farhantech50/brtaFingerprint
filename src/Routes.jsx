@@ -8,7 +8,7 @@ import LoginLanding from "./components/loginLanding/loginLanding";
 import { useAuthContext } from "./contexts/authContext";
 
 export default function AppRoutes() {
-  const { isLoggedIn, authUser } = useAuthContext(); // Access isLoggedIn and authUser from context
+  const { isLoggedIn, loginLandData } = useAuthContext(); // Access isLoggedIn and authUser from context
   const location = useLocation(); // Get the current location to access the state
 
   return (
@@ -32,7 +32,7 @@ export default function AppRoutes() {
       <Route
         path="/login-data"
         element={
-          authUser && location.state?.fromLogin ? (
+          loginLandData && location.state?.fromLogin ? (
             <LoginLanding />
           ) : (
             <Navigate to="/login" />

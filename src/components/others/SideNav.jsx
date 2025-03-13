@@ -112,7 +112,7 @@ export default function SideNav() {
               align="center"
               marginBottom={theme.spacing(2)}
             >
-              {authUser.profileName}
+              {authUser.firstName}
               {/* Display name only if authUser is available */}
             </Typography>
           )}

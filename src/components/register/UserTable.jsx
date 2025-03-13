@@ -121,7 +121,6 @@ export default function UserTable({
                 activeStatus: Number(activeStatus),
               }
             );
-            console.log(response);
             if (response.data.success) {
               return { ...user, enabled: activeStatus ? 1 : 0 };
             }

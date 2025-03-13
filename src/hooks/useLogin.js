@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
   const api = useApi();
-  const { setAuthUser, setToken } = useAuthContext();
+  const { setAuthUser, setToken, setLoginLandData } = useAuthContext();
   const navigate = useNavigate(); // To handle navigation
 
   const login = async (userName, password) => {
@@ -23,7 +23,7 @@ const useLogin = () => {
       // Check if the status code is 201 (Created)
       if (res.data.statusCode === 201) {
         // Set the user data
-        setAuthUser(data);
+        setLoginLandData(data);
         //localStorage.setItem("access-token", JSON.stringify(data.accessToken));
         //setToken(data.accessToken); // Directly set the token
 
